@@ -1,0 +1,69 @@
+/* ================================================================
+   INTRO TITLE
+   Idle white text that transitions to a gradient on click,
+   holds the gradient colour for a clear moment, then squishes
+   to a horizontal line and collapses to a point.
+   ================================================================ */
+
+.reveal-text {
+  font-size: clamp(1.4rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin: 0;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+
+  /* Starts white - gradient is hidden beneath */
+  color: white;
+
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255, 0, 150, 0.9) 0%, transparent 55%),
+    radial-gradient(circle at 70% 60%, rgba(0, 150, 255, 0.9) 0%, transparent 55%),
+    repeating-conic-gradient(
+      from 0deg at 50% 200%,
+      #ff006e 0deg 30deg,
+      #8338ec 30deg 60deg,
+      #3a86ff 60deg 90deg,
+      #06ffa5 90deg 120deg,
+      #ffbe0b 120deg 150deg,
+      #fb5607 150deg 180deg
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 300% 300%, 300% 300%, 400px 400px;
+  animation: shift 10s ease-in-out infinite;
+}
+
+/* ── Collapse: white → gradient reveal (holds ~0.75s) → squish → point ── */
+.reveal-text.collapsing {
+  animation: title-squish 1.5s cubic-bezier(0.4, 0, 1, 1) forwards;
+  transform-origin: center center;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@keyframes title-squish {
+  0%   { color: white;       transform: scaleY(1)    scaleX(1);    opacity: 1; letter-spacing: 0.04em; filter: blur(0px); }
+  15%  { color: transparent; transform: scaleY(1)    scaleX(1);    opacity: 1; letter-spacing: 0.04em; filter: blur(0px); }
+  65%  { color: transparent; transform: scaleY(1)    scaleX(1);    opacity: 1; letter-spacing: 0.04em; filter: blur(0px); }
+  75%  { color: transparent; transform: scaleY(0.06) scaleX(1);    opacity: 1; letter-spacing: 0.04em; filter: blur(0px); }
+  88%  { color: transparent; transform: scaleY(0.06) scaleX(0.05); opacity: 1; letter-spacing: -1em;   filter: blur(2px); }
+  100% { color: transparent; transform: scaleY(0)    scaleX(0);    opacity: 0; letter-spacing: -1em;   filter: blur(6px); }
+}
+
+/* ── Utility: permanent gradient reveal ── */
+.reveal-text.revealed {
+  color: transparent;
+}
+
+/* ── Utility: auto-fade-back cycle ── */
+.reveal-text.reveal-animate {
+  animation: text-reveal-cycle 2s ease forwards, shift 15s ease-in-out infinite;
+}
+
+@keyframes text-reveal-cycle {
+  0%   { color: white; }
+  25%  { color: transparent; }
+  75%  { color: transparent; }
+  100% { color: white; }
+}

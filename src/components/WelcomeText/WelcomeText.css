@@ -1,0 +1,59 @@
+/* ================================================================
+   WELCOME TEXT
+   Expands from the center point left by the title collapse,
+   holds briefly, then collapses inward to trigger the portal.
+   ================================================================ */
+
+.welcome-text {
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+
+  /* Gradient visible through transparent letter shapes */
+  color: transparent;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255, 0, 150, 0.9) 0%, transparent 55%),
+    radial-gradient(circle at 70% 60%, rgba(0, 150, 255, 0.9) 0%, transparent 55%),
+    repeating-conic-gradient(
+      from 0deg at 50% 200%,
+      #ff006e 0deg 30deg,
+      #8338ec 30deg 60deg,
+      #3a86ff 60deg 90deg,
+      #06ffa5 90deg 120deg,
+      #ffbe0b 120deg 150deg,
+      #fb5607 150deg 180deg
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 300% 300%, 300% 300%, 400px 400px;
+}
+
+/* ── Fade in from center point (1s delay so portal has time to vanish) ── */
+.welcome-text.welcome-fading-in {
+  animation: welcome-fade-in 1s 1s ease both;
+}
+
+@keyframes welcome-fade-in {
+  0%  { opacity: 0; transform: scaleY(0.06) scaleX(0.06); filter: blur(6px); }
+  30% { opacity: 1; transform: scaleY(0.35) scaleX(.35);    filter: blur(2px); }
+  40% { opacity: 1; transform: scaleY(0.5) scaleX(.5);    filter: blur(0px); }
+  80% { opacity: 1; transform: scaleY(1)    scaleX(1);    filter: blur(0px); }
+}
+
+/* ── Collapse back to a point → portal phase begins ── */
+.welcome-text.collapsing {
+  animation: welcome-squish 0.65s cubic-bezier(0.4, 0, 1, 1) forwards;
+  transform-origin: center center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@keyframes welcome-squish {
+  0%   { transform: scaleY(1)    scaleX(1);    opacity: 1; filter: blur(0px); }
+  30%  { transform: scaleY(0.3)  scaleX(1);    opacity: 1; filter: blur(0px); }
+  65%  { transform: scaleY(0.16) scaleX(1);    opacity: 1; filter: blur(0px); }
+  90%  { transform: scaleY(0.06) scaleX(0.05); opacity: 1; filter: blur(2px); }
+  100% { transform: scaleY(0)    scaleX(0);    opacity: 0; filter: blur(6px); }
+}

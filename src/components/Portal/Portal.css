@@ -1,0 +1,148 @@
+/* ================================================================
+   PORTAL
+   A small glowing portal ball with colorful rotating rings.
+
+   KEY: The rings use actual gradient colors (not transparency) so
+   they remain visible even though the color-layer's center is masked.
+   ================================================================ */
+
+/* ── Surround: fade everything outside the portal to black ── */
+.portal-surround {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 148px,
+    rgba(0, 0, 0, 0.8) 150px,
+    rgb(0, 0, 0) 180px
+  );
+}
+
+.portal-surround--small {
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 42px,
+    rgba(0, 0, 0, 0.7) 46px,
+    black 58px
+  );
+}
+
+/* ── Portal ball ── */
+.portal {
+  width: 270px;
+  height: 265px;
+  border-radius: 50%;
+  position: relative;
+  animation: portal-appear 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.2))
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+.portal--ball {
+  width: 80px;
+  height: 80px;
+  animation:
+    ball-appear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    portal-glow 1.5s 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes portal-glow {
+  from { filter: drop-shadow(0 0 12px rgba(255, 80, 200, 0.7))  drop-shadow(0 0 24px rgba(80, 150, 255, 0.5)); }
+  to   { filter: drop-shadow(0 0 22px rgba(255, 80, 200, 1.0))  drop-shadow(0 0 44px rgba(80, 150, 255, 0.9)); }
+}
+
+@keyframes ball-appear {
+  0%   { transform: scale(0) rotate(-360deg); opacity: 0; }
+  70%  { transform: scale(1.15) rotate(20deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg);     opacity: 1; }
+}
+
+/* ── Glass center ── */
+.portal-center {
+  position: absolute;
+  inset: 1%;
+  border-radius: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portal-center--glass {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ── Rotating colored rings ── */
+/* Using actual gradient colors so the ring is visible independent
+   of what's behind it (the color-layer center is masked out). */
+.portal::before {
+  content: "";
+  position: absolute;
+  inset: -4.9%;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ff006e,
+    #8338ec,
+    #3a86ff,
+    #06ffa5,
+    #ffbe0b,
+    #fb5607,
+    #ff006e
+  );
+  /* Clip to ring only — hide center, show annulus */
+  mask-image: radial-gradient(circle at center, transparent 120px, black 122px);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 120px, black 122px);
+  animation: rotatePortal 1.565s linear infinite;
+  z-index: 1;
+}
+
+.portal::after {
+  content: "";
+  position: absolute;
+  inset: -3%;
+  border-radius: 50%;
+  background: conic-gradient(
+    #06ffa5,
+    #ffbe0b,
+    #fb5607,
+    #ff006e,
+    #8338ec,
+    #3a86ff,
+    #06ffa5
+  );
+  mask-image: radial-gradient(circle at center, transparent 120px, black 122px);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 120px, black 122px);
+  animation: rotatePortalReverse 2.174s linear infinite;
+  z-index: 1;
+}
+
+/* ── Ball-sized ring: tighter mask radius to match 80px ball ── */
+.portal--ball::before {
+  mask-image: radial-gradient(circle at center, transparent 30px, black 32px);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 30px, black 32px);
+}
+.portal--ball::after {
+  mask-image: radial-gradient(circle at center, transparent 30px, black 32px);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 30px, black 32px);
+}
+
+@keyframes rotatePortal {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes rotatePortalReverse {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes portal-appear {
+  0%   { transform: scale(0) rotate(-540deg); opacity: 0; }
+  65%  { transform: scale(1.1) rotate(15deg); opacity: 1; }
+  100% { transform: scale(1)   rotate(0deg);  opacity: 1; }
+}

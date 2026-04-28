@@ -1,0 +1,90 @@
+/* ================================================================
+   COLOR LAYER
+   Rotating gradient wheel — always rendered at z-index 1.
+   Visible only through transparent elements (text, portal ring).
+   The mask hides the hub center so it never bleeds through.
+   ================================================================ */
+.dust-pixel {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: hsl(calc(var(--i) * 7.5), 100%, 70%);
+  opacity: 0;
+  animation: dust-scatter 1.8s calc(2.2s + (var(--i) * 0.03s)) ease-out forwards;
+}
+
+@keyframes dust-scatter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(calc(var(--i) * 7.5deg)) translateX(0) scale(0);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(calc(var(--i) * 7.5deg)) translateX(12px) scale(1);
+  }
+  60% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) rotate(calc(var(--i) * 7.5deg)) translateX(calc(40px + var(--i) * 1.8px)) scale(1.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(calc(var(--i) * 7.5deg)) translateX(calc(90px + var(--i) * 2.5px)) scale(0.3);
+  }
+}
+.color-layer {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: hsl(calc(var(--i) * 7.5), 100%, 70%);
+  opacity: 0;
+  animation: dust-scatter 1.8s calc(2.2s + (var(--i) * 0.03s)) ease-out forwards;
+}
+
+.color-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-radial-gradient(
+      circle at 30% 40%,
+      transparent 0px,
+      rgba(255, 255, 255, 0.1) 50px,
+      transparent 100px
+    ),
+    repeating-radial-gradient(
+      circle at 70% 60%,
+      transparent 0px,
+      rgba(0, 0, 0, 0.1) 30px,
+      transparent 60px
+    );
+  animation: counter-rotate 25s linear infinite;
+}
+
+.color-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-conic-gradient(
+      from 90deg at 20% 80%,
+      transparent 0deg,
+      rgba(255, 255, 255, 0.2) 10deg,
+      transparent 20deg,
+      transparent 40deg
+    ),
+    repeating-conic-gradient(
+      from 270deg at 80% 20%,
+      transparent 0deg,
+      rgba(0, 0, 0, 0.2) 15deg,
+      transparent 30deg,
+      transparent 60deg
+    );
+  background-size: 300px 300px, 250px 250px;
+  animation: spin 30s linear infinite reverse;
+}

@@ -539,3 +539,35 @@
   --fly-x:  28vw;
   --fly-y:  150vh;
 }
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+   Mobile  : ≤ 640px
+   Tablet  : 641px – 1024px
+   ================================================================ */
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .qc-block-title { width: min(78vw, 280px); height: 32px; }
+  .qc-block-sub   { width: min(52vw, 180px); height: 17px; }
+
+  .qc-cards {
+    gap: 8px;
+  }
+
+  .qc-card {
+    width: min(24vw, 90px);
+    height: 90px;
+  }
+}
+
+/* ── Tablet / half-screen ── */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .qc-block-title { width: min(48vw, 360px); height: 40px; }
+  .qc-block-sub   { width: min(28vw, 200px); height: 20px; }
+
+  .qc-card {
+    width: min(22vw, 160px);
+    height: 115px;
+  }
+}

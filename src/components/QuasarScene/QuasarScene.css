@@ -103,196 +103,31 @@
   transform: translateX(-50%) translateY(-100%);
   width: 6px;
   transform-origin: bottom center;
-  background: linear-gradient(45deg,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e
+  background: repeating-linear-gradient(
+    to top,
+    #ff006e, #fb5607, #ffbe0b, #06ffa5, #3a86ff, #8338ec, #ff006e
   );
+  background-size: 100% 180px;
   border-radius: 3px 3px 0 0;
-  animation: 
-    beam-blast 0.6s 1.6s cubic-bezier(0.22, 1, 0.36, 1) both,
-    beam-shoot 0.6s 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   filter: blur(1.5px);
   box-shadow: 0 0 12px rgba(255, 200, 50, 0.8), 0 0 30px rgba(255, 80, 0, 0.4);
+  animation:
+    beam-shoot      0.6s 1.6s cubic-bezier(0.22, 1, 0.36, 1) both,
+    beam-color-flow 1.0s 1.6s linear                          infinite;
 }
 
 @keyframes beam-shoot {
-  0%   { height: 0;      opacity: 0; }
-  30%  { opacity: 1; background: conic-gradient(
-    
-    
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    
-  )}
-  40% { background: conic-gradient(
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-  ); 
-    }
-  50% { background: conic-gradient(
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-  ); }
-  60% { background: conic-gradient(
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-  ); }
-  70%  { background: conic-gradient(
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-  ); }
-  80% { background: conic-gradient(
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e
-  ); }
-  90% { background: conic-gradient(
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-  ); }
-  100% { height: 80vh;   opacity: 0.85; background: conic-gradient(
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-  ); }
+  0%   { height: 0;     opacity: 0;    }
+  30%  {               opacity: 1;    }
+  100% { height: 80vh; opacity: 0.85; }
 }
 
-@keyframes beam-blast {
-  0% {background: conic-gradient(
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-  ); }
-  10% {background: conic-gradient(
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-  ); }
-  20% {background: conic-gradient(
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-  ); }
-  30%  { background: conic-gradient(
-    
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    
-  )}
-  40% { background: conic-gradient(
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    
-  ); 
-    }
-  50% { background: conic-gradient(
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-  ); }
-  60% { background: conic-gradient(
-     #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-   
-
-  ); }
-  70%  { background: conic-gradient(
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    
-  ); }
-  80% { background: conic-gradient(
-    #ffbe0b,
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    
-  ); }
-  90% { background: conic-gradient(
-    #fb5607,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    
-  ); }
-  100% { background: conic-gradient(
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #06ffa5,
-    #ffbe0b,
-    #fb5607,
-    
-  ); }
+@keyframes beam-color-flow {
+  from { background-position: 0 0;    }
+  to   { background-position: 0 180px; }
 }
+
+
 
 /* ================================================================
    DUST PIXELS
@@ -337,11 +172,12 @@
    welcome-fade    0.5s @ 5.5s
    ================================================================ */
 
+/* Wrapper: static centering only — never animated */
 .quasar-welcome-wrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
 }
@@ -369,21 +205,20 @@
   background-clip: text;
   background-size: 300% 300%, 300% 300%, 400px 400px;
   opacity: 0;
+  will-change: transform, opacity;
   animation:
-    welcome-ascend   3s   4.0s cubic-bezier(0.22, 1, 0.36, 1) both,
-    welcome-fade-out 0.5s 7.0s ease                            forwards;
+    welcome-ascend   2.4s 4.0s cubic-bezier(0.05, 0.7, 0.1, 1.0) both,
+    welcome-fade-out 0.5s 7.3s ease                               forwards;
 }
 
 @keyframes welcome-ascend {
-  0%   { transform: translateY(40vh) scaleX(0.04) scaleY(0.04); opacity: 0; filter: blur(16px); }
-  8%   { transform: translateY(32vh) scaleX(0.10) scaleY(0.15); opacity: 1; filter: blur(8px);  }
-  30%  { transform: translateY(4vh)  scaleX(0.67) scaleY(1);    opacity: 1; filter: blur(0px);  }
-  60% { transform: translateY(0)    scaleX(1)    scaleY(1);    opacity: 1; filter: blur(0px);  }
+  from { transform: translateY(22vh); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
 @keyframes welcome-fade-out {
-  from { opacity: 1; filter: blur(0px); }
-  to   { opacity: 0; filter: blur(8px); }
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 
 /* ================================================================
@@ -408,7 +243,7 @@
 .qc-hero {
   --delay:  7.2s;
   --dur:    0.85s;
-  --land-y: -50vh;
+  --land-y: -75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -435,7 +270,9 @@
   max-width: 100%;
   height: 64px;
   z-index: 20;
-  animation: header-slide-in 0.6s 7.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation:
+    header-slide-in  0.6s 7.8s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    header-slide-out 0.5s 9.0s ease-in                            forwards;
 }
 
 @keyframes header-slide-in {
@@ -455,9 +292,9 @@
 
 /* Batch 2: project cards */
 .qc-cards {
-  --delay:  8.4s;
+  --delay:  7.8s;
   --dur:    0.8s;
-  --land-y: -32vh;
+  --land-y: -60vh;
   display: flex;
   gap: 16px;
   align-items: center;
@@ -545,6 +382,59 @@
    Mobile  : ≤ 640px
    Tablet  : 641px – 1024px
    ================================================================ */
+
+@keyframes header-slide-out {
+  from { transform: translateX(-50%) translateY(0);     opacity: 1; }
+  to   { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+}
+
+/* ================================================================
+   INTRO FOUNTAIN SCATTER
+   Individual child elements fly outward like a fountain at ~9s.
+   animation-fill-mode: both means they sit normally before 9s
+   (0% keyframe = natural visible state), then scatter and vanish.
+   ================================================================ */
+
+@keyframes quasar-child-scatter {
+  0%   { transform: scale(1);                                                                    opacity: 1; filter: blur(0px);  }
+  20%  { transform: translateX(calc(var(--sx, 0) * 0.1)) translateY(-10vh) scale(1.08);        opacity: 1; filter: blur(0px);  }
+  100% { transform: translateX(var(--sx, 0))             translateY(var(--sy, -120vh)) scale(0.08); opacity: 0; filter: blur(10px); }
+}
+
+/* Hero title block — upper-left */
+.quasar-scene:not(.quasar-scene--fast) .qc-block:nth-child(1) {
+  animation: quasar-child-scatter 0.85s 9.0s  cubic-bezier(0.4, 0, 0.85, 0.6) both;
+  --sx: -8vw;
+  --sy: -100vh;
+}
+
+/* Hero subtitle block — upper-right */
+.quasar-scene:not(.quasar-scene--fast) .qc-block:nth-child(2) {
+  animation: quasar-child-scatter 0.85s 9.07s cubic-bezier(0.4, 0, 0.85, 0.6) both;
+  --sx: 8vw;
+  --sy: -110vh;
+}
+
+/* Card 1 — upper-left */
+.quasar-scene:not(.quasar-scene--fast) .qc-card:nth-child(1) {
+  animation: quasar-child-scatter 0.85s 9.05s cubic-bezier(0.4, 0, 0.85, 0.6) both;
+  --sx: -14vw;
+  --sy: -95vh;
+}
+
+/* Card 2 — straight up */
+.quasar-scene:not(.quasar-scene--fast) .qc-card:nth-child(2) {
+  animation: quasar-child-scatter 0.85s 9.12s cubic-bezier(0.4, 0, 0.85, 0.6) both;
+  --sx: 0vw;
+  --sy: -115vh;
+}
+
+/* Card 3 — upper-right */
+.quasar-scene:not(.quasar-scene--fast) .qc-card:nth-child(3) {
+  animation: quasar-child-scatter 0.85s 9.19s cubic-bezier(0.4, 0, 0.85, 0.6) both;
+  --sx: 14vw;
+  --sy: -95vh;
+}
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
